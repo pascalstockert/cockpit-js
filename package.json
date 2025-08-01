@@ -1,6 +1,6 @@
 {
-  "name": "cockpit-js",
-  "version": "0.1.0",
+  "name": "@pasu/cockpit-client",
+  "version": "0.1.1",
   "description": "An API client for the headless CMS Cockpit",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

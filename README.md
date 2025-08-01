@@ -1,5 +1,5 @@
-# Cockpit-js
-Cockpit-js is an unofficial API client for [Cockpit CMS](https://getcockpit.com), which is licensed under the [MIT License](https://github.com/agentejo/cockpit/blob/next/LICENSE).
+# @pasu/cockpit-client
+cockpit-client is an unofficial API client for [Cockpit CMS](https://getcockpit.com), which is licensed under the [MIT License](https://github.com/agentejo/cockpit/blob/next/LICENSE).
 
 The aim for this package is to get you away from having to write queries yourself, while retaining the
 necessary flexibility of filtering, sorting and shaping the data you need.
@@ -9,14 +9,14 @@ necessary flexibility of filtering, sorting and shaping the data you need.
 > To see what is currently implemented, check the documentation provided below.
 
 ## Installation
-Add `cockpit-js` as a dependency via npm:
+Add `@pasu/cockpit-client` as a dependency via npm:
 
-`npm install cockpit-js`
+`npm install @pasu/cockpit-client`
 
 ## Usage
 ### Example using vanilla JS
 ```js
-import { createClient } from 'cockpit-js';
+import { createClient } from '@pasu/cockpit-client';
 
 // instantiate a client with the link to your Cockpit-API:
 const client = createClient('https://path.to.my/api');
@@ -32,7 +32,7 @@ const posts = await postCollection.query({limit: 3});
 
 ```ts
 // Asset contains all metadata the Cockpit-API exposes
-import { createClient, Asset } from 'cockpit-js';
+import { createClient, Asset } from '@pasu/cockpit-client';
 
 // define types of your documents
 interface Post {
