@@ -1,6 +1,6 @@
 {
   "name": "@pasu/cockpit-client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An API client for the headless CMS Cockpit",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,12 +12,20 @@
     "bump:major": "npm version major && @sync-git-tag",
     "sync-git-tag": "sh -c 'git tag v$(npm pkg get version | tr -d \\\"\\\")'"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pascalstockert/cockpit-js.git"
   },
-  "keywords": ["api", "typescript", "client"],
+  "keywords": [
+    "api",
+    "typescript",
+    "client"
+  ],
   "author": "Pascal Stockert",
   "license": "MIT",
   "type": "module",
