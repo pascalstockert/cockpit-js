@@ -7,9 +7,9 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "bump:patch": "npm version patch && @sync-git-tag",
-    "bump:minor": "npm version minor && @sync-git-tag",
-    "bump:major": "npm version major && @sync-git-tag",
+    "bump:patch": "npm version patch && npm run sync-git-tag",
+    "bump:minor": "npm version minor && npm run sync-git-tag",
+    "bump:major": "npm version major && npm run sync-git-tag",
     "sync-git-tag": "sh -c 'git tag v$(npm pkg get version | tr -d \\\"\\\")'"
   },
   "files": [
