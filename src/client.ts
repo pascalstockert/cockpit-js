@@ -1,6 +1,7 @@
 import { Asset, AssetOptions, DocumentMeta, Query } from './types/client.types';
 
-const getUrl = async <T = any>(url: string, query?: Query<T>): Promise<Array<DocumentMeta<T>>> => {
+const getUrl = async <T = any>(url: string, options?: {query?: Query<T>; apiKey?: string;}): Promise<Array<DocumentMeta<T>>> => {
+  const { query, apiKey } = options || {};
   const queryParams = new URLSearchParams();
 
   if (query) {
@@ -15,18 +16,25 @@ const getUrl = async <T = any>(url: string, query?: Query<T>): Promise<Array<Doc
     if (query.sort) {queryParams.set('sort', JSON.stringify(query.sort));}
   }
 
-  const res = await fetch(`${url}?${queryParams.toString()}`);
+  const headers = new Headers();
+  if (apiKey !== undefined) {
+    headers.set('api-key', apiKey);
+  }
+
+  const res = await fetch(`${url}?${queryParams.toString()}`, {
+    headers,
+  });
 
   return await res.json();
 };
 
-const collectionPrototype = <T = any>(host: string, collectionName: string) => {
+const collectionPrototype = <T = any>(host: string, collectionName: string, apiKey?: string) => {
   const bulkEndpoint = `${host}/content/items/${collectionName}`;
   const singletonEndpoint = `${host}/content/item/${collectionName}`;
 
   return {
-    document: (id: string) => getUrl<T>(`${singletonEndpoint}/${id}`),
-    query: (queryObject?: Query<T>) => getUrl<T>(bulkEndpoint, queryObject),
+    query: (queryObject?: Query<T>) => getUrl<T>(bulkEndpoint, {query: queryObject, apiKey}),
+    document: (id: string) => getUrl<T>(`${singletonEndpoint}/${id}`, {apiKey}),
   };
 };
 
@@ -47,8 +55,17 @@ const getImagePath = (host: string, assetId: string, options?: AssetOptions): st
   return `${host}/assets/image/${assetId}?${query.toString()}`;
 };
 
-const fetchAsset = async (url: string): Promise<Asset> => {
-  const response = await fetch(url);
+const fetchAsset = async (url: string, options?: {apiKey: string;}): Promise<Asset> => {
+  const {apiKey} = options || {};
+  const headers = new Headers();
+
+  if (apiKey) {
+    headers.set('api-key', apiKey);
+  }
+
+  const response = await fetch(url, {
+    headers,
+  });
 
   return await response.json();
 }
@@ -65,9 +82,9 @@ const imagePrototype = (host: string, assetId: string, options: AssetOptions = d
   };
 }
 
-export const createClient = (host: string) => {
+export const createClient = (host: string, apiKey?: string) => {
   return {
-    collection: <T = any>(name: string) => collectionPrototype<T>(host, name),
+    collection: <T = any>(name: string) => collectionPrototype<T>(host, name, apiKey),
     image: (assetId: string, options?: AssetOptions) => imagePrototype(host, assetId, options),
   }
 };
